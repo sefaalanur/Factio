@@ -20,7 +20,7 @@ export default function CreatePost() {
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
   const navigate = useNavigate();
-  const handleUpdloadImage = async () => {
+  const handleUploadImage = async () => {
     try {
       if (!file) {
         setImageUploadError('Please select an image');
@@ -100,9 +100,11 @@ export default function CreatePost() {
             }
           >
             <option value='uncategorized'>Select a category</option>
-            <option value='javascript'>JavaScript</option>
-            <option value='reactjs'>React.js</option>
-            <option value='nextjs'>Next.js</option>
+            <option value='Science & Nature'>Science & Nature</option>
+            <option value='History & Culture'>History & Culture</option>
+            <option value='Technology & Innovation'>Technology & Innovation</option>
+            <option value='Health & Wellness'>Health & Wellness</option>
+            <option value='Travel & Geography'>Travel & Geography</option>
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
@@ -116,7 +118,7 @@ export default function CreatePost() {
             gradientDuoTone='purpleToBlue'
             size='sm'
             outline
-            onClick={handleUpdloadImage}
+            onClick={handleUploadImage}
             disabled={imageUploadProgress}
           >
             {imageUploadProgress ? (
@@ -148,7 +150,7 @@ export default function CreatePost() {
             setFormData({ ...formData, content: value });
           }}
         />
-        <Button type='submit' gradientDuoTone='purpleToPink'>
+        <Button type='submit' gradientDuoTone='cyanToBlue'>
           Publish
         </Button>
         {publishError && (

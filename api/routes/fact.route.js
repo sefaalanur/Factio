@@ -1,0 +1,10 @@
+import express from 'express';
+import { verifyToken } from '../utils/verifyUser.js';
+import { create, getfacts, deletefact, updatefact, likeFact } from '../controllers/fact.controller.js';
+const router = express.Router();
+router.post('/create', verifyToken, create);
+router.get('/getfacts', getfacts);
+router.delete('/deletefact/:factId/:userId', verifyToken, deletefact);
+router.put('/updatefact/:factId/:userId', verifyToken, updatefact);
+router.put('/likeFact/:factId', verifyToken, likeFact);
+export default router;

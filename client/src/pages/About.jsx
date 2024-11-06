@@ -15,7 +15,7 @@ export default function About() {
             world. I am a passionate developer who loves to spread knowledge with people.
           </p>
           <p>
-            On this blog, you'll find weekly articles and posts on topics
+            On this blog, you'll find weekly posted articles on topics
             such as science, technology, history, nature and more. I am
             always learning and exploring new facts, so be sure to check 
             back often for new content!

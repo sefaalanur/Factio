@@ -1,4 +1,4 @@
-import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
+import { Alert, Button, FileInput, TextInput } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {
@@ -8,42 +8,18 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-export default function UpdatePost() {
+export default function CreatePost() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-  const { postId } = useParams();
   const navigate = useNavigate();
-    const { currentUser } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    try {
-      const fetchPost = async () => {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`);
-        const data = await res.json();
-        if (!res.ok) {
-          console.log(data.message);
-          setPublishError(data.message);
-          return;
-        }
-        if (res.ok) {
-          setPublishError(null);
-          setFormData(data.posts[0]);
-        }
-      };
-      fetchPost();
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, [postId]);
   const handleUploadImage = async () => {
     try {
       if (!file) {
@@ -83,10 +59,9 @@ export default function UpdatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await fetch(`/api/post/updatepost/${postId}/${currentUser._id}`, {
-        method: 'PUT',
+      const res = await fetch('/api/fact/create', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -99,15 +74,16 @@ export default function UpdatePost() {
       }
       if (res.ok) {
         setPublishError(null);
-        navigate(`/post/${data.slug}`);
+        navigate(`/fact/${data.slug}`);
       }
     } catch (error) {
       setPublishError('Something went wrong');
     }
   };
+
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-      <h1 className='text-center text-3xl my-7 font-semibold'>Update post</h1>
+      <h1 className='text-center text-3xl my-7 font-semibold'>Create a fact</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
           <TextInput
@@ -119,28 +95,10 @@ export default function UpdatePost() {
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
-            value={formData.title}
           />
-          <Select
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-            value={formData.category}
-          >
-            <option value='uncategorized'>Select a category</option>
-            <option value='Science & Nature'>Science & Nature</option>
-            <option value='History & Culture'>History & Culture</option>
-            <option value='Technology & Innovation'>Technology & Innovation</option>
-            <option value='Health & Wellness'>Health & Wellness</option>
-            <option value='Travel & Geography'>Travel & Geography</option>
-          </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
-          <FileInput
-            type='file'
-            accept='image/*'
-            onChange={(e) => setFile(e.target.files[0])}
-          />
+          <FileInput type='file' accept='image/*'  onChange={(e) => setFile(e.target.files[0])}/>
           <Button
             type='button'
             gradientDuoTone='purpleToBlue'
@@ -149,7 +107,7 @@ export default function UpdatePost() {
             onClick={handleUploadImage}
             disabled={imageUploadProgress}
           >
-            {imageUploadProgress ? (
+           {imageUploadProgress ? (
               <div className='w-16 h-16'>
                 <CircularProgressbar
                   value={imageUploadProgress}
@@ -168,19 +126,19 @@ export default function UpdatePost() {
             alt='upload'
             className='w-full h-72 object-cover'
           />
-        )}
+        )
+        }
         <ReactQuill
           theme='snow'
-          value={formData.content}
           placeholder='Write something...'
-          className='h-72 mb-12'
+          className='h-36 mb-12'
           required
           onChange={(value) => {
             setFormData({ ...formData, content: value });
           }}
         />
-        <Button type='submit' gradientDuoTone='purpleToPink'>
-          Update post
+        <Button type='submit' gradientDuoTone='greenToBlue'>
+          Publish
         </Button>
         {publishError && (
           <Alert className='mt-5' color='failure'>

@@ -122,12 +122,14 @@ export default function Search() {
               id='category'
             >
               <option value='uncategorized'>Uncategorized</option>
-              <option value='reactjs'>React.js</option>
-              <option value='nextjs'>Next.js</option>
-              <option value='javascript'>JavaScript</option>
+              <option value='Science & Nature'>Science & Nature</option>
+              <option value='History & Culture'>History & Culture</option>
+              <option value='Technology & Innovation'>Technology & Innovation</option>
+              <option value='Health & Wellness'>Health & Wellness</option>
+              <option value='Travel & Geography'>Travel & Geography</option>
             </Select>
           </div>
-          <Button type='submit' outline gradientDuoTone='purpleToPink'>
+          <Button type='submit' outline gradientDuoTone='purpleToBlue'>
             Apply Filters
           </Button>
         </form>

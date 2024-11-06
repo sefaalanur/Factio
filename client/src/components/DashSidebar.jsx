@@ -6,6 +6,7 @@ import {
   HiOutlineUserGroup,
   HiAnnotation,
   HiChartPie,
+  HiOutlineGlobe
 } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -76,6 +77,17 @@ export default function DashSidebar() {
                 as='div'
               >
                 Posts
+              </Sidebar.Item>
+            </Link>
+          )}
+          {currentUser.isAdmin && (
+            <Link to='/dashboard?tab=facts'>
+              <Sidebar.Item
+                active={tab === 'facts'}
+                icon={HiOutlineGlobe}
+                as='div'
+              >
+                Facts
               </Sidebar.Item>
             </Link>
           )}
